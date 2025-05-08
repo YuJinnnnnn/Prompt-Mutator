@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Have fun with your prompt!</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <h1 class="title">Have fun with your prompt!</h1>
+
+  <div class="theme-toggle">
+    <button onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
+  </div>
+
+  <div class="container">
+    <!-- LEFT COLUMN + TIP -->
+    <div class="column-wrapper">
+      <div class="column left">
+        <h2>Prompt Input</h2>
+        <form method="post">
+          <input type="hidden" name="form_type" value="mutate">
+          <label for="prompt">Enter a prompt:</label><br>
+          <input type="text" id="prompt" name="prompt" size="60" required><br><br>
+
+          <label for="levelRange">Change Level:</label><br>
+          <input type="range" id="levelRange" name="level" min="0" max="3" value="0" oninput="updateLevelLabel(this.value)">
+          <span id="levelLabel">Minor</span><br><br>
+
+          <button type="submit"><i class="fas fa-magic"></i> Mutate Prompt</button>
+        </form>
+      </div>
+      <div class="instructions">
+        <p><strong>🔍 Tip:</strong> Start with a clear, visual prompt like “A cat reading a newspaper at a café.”</p>
+      </div>
+    </div>
+
+    <!-- MIDDLE COLUMN + TIP -->
+    <div class="column-wrapper">
+      <div class="column middle">
+        <h2>Prompt Mutator</h2>
+
+        {% if original %}
+          <h3>Original Prompt:</h3>
+          <p>{{ original }}</p>
+          <p><strong>Selected Level:</strong> {{ level_display }}</p>
+        {% endif %}
+
+        {% if highlighted_list %}
+          <form method="post">
+            <input type="hidden" name="form_type" value="generate">
+            <input type="hidden" name="original_prompt" value="{{ original }}">
+            <input type="hidden" name="level_display" value="{{ level_display }}">
+            <h3>Choose a Mutated Prompt:</h3>
+            <ul>
+              {% for item in highlighted_list %}
+                <li>
+                  <label>
+                    <input type="radio" name="selected_prompt"
+                           value="{{ mutated_variants[loop.index0] }}"
+                           {% if mutated_variants[loop.index0] == selected %}checked{% endif %}
+                           required>
+                    {{ item|safe }}
+                  </label>
+                </li>
+              {% endfor %}
+            </ul>
+            <button type="submit"><i class="fas fa-image"></i> Generate Image</button>
+          </form>
+        {% endif %}
+      </div>
+      <div class="instructions">
+        <p><strong>🔍 Tip:</strong> Select the most interesting mutation — this will be used for image generation.</p>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN + TIP -->
+    <div class="column-wrapper">
+      <div class="column right">
+        <h2>Image Generator</h2>
+
+        {% if selected %}
+          <h3>Selected Prompt:</h3>
+          <p><strong>{{ selected }}</strong>
+            <button onclick="copyToClipboard('{{ selected }}')">📋 Copy</button></p>
+        {% endif %}
+
+        {% if image_url %}
+          <h3>Generated Image:</h3>
+          <img src="{{ image_url }}" alt="Generated image" class="fade-in">
+        {% elif selected %}
+          <p class="warning">⚠️ Image generation is not available (no credits or restricted API key).</p>
+        {% endif %}
+
+        {% if selected %}
+          <form method="post" action="/download">
+            <input type="hidden" name="prompt_text" value="{{ selected }}">
+            <button type="submit"><i class="fas fa-download"></i> Download Prompt</button>
+          </form>
+        {% endif %}
+      </div>
+      <div class="instructions">
+        <p><strong>🌇 Tip:</strong> Images are generated with DALL·E 3. Try a surreal or cinematic phrase for better results.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const levels = ["Minor", "Moderate", "Dramatic", "Random"];
+    function updateLevelLabel(value) {
+      document.getElementById("levelLabel").innerText = levels[value];
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+      updateLevelLabel(document.getElementById("levelRange").value);
+    });
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text);
+      alert("Prompt copied to clipboard!");
+    }
+  </script>
+</body>
+</html>

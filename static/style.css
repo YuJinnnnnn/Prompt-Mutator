@@ -1,0 +1,220 @@
+/* ========== Base Layout ========== */
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+  padding: 2rem;
+  max-width: 1600px;
+  margin: 0 auto;
+  color: #333;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark {
+  background-color: #1e1e1e;
+  color: #eee;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  font-size: 2.2rem;
+  color: #222;
+}
+
+body.dark .title {
+  color: #eee;
+}
+
+.container {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.column-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.column {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+body.dark .column {
+  background: #2e2e2e;
+}
+
+.column h2 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.5rem;
+}
+
+body.dark .column h2 {
+  color: #eee;
+  border-bottom: 1px solid #555;
+}
+
+.column h3 {
+  font-size: 1.1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #007acc;
+}
+
+/* ========== Forms & Inputs ========== */
+
+form {
+  margin-bottom: 2rem;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+button {
+  background-color: #007acc;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #005fa3;
+}
+
+/* ========== Prompt List ========== */
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  margin-bottom: 1rem;
+}
+
+label input[type="radio"] {
+  margin-right: 0.6rem;
+}
+
+/* ========== Highlighting ========== */
+
+.highlight {
+  background-color: #ffd166;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-weight: 600;
+  color: #111;
+}
+
+body.dark .highlight {
+  background-color: #f4d35e;
+  color: #000;
+}
+
+/* ========== Images ========== */
+
+img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-top: 1rem;
+  border: 1px solid #ccc;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.6s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* ========== Text ========== */
+
+p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.warning {
+  color: red;
+  font-weight: bold;
+}
+
+/* ========== Instruction Tips ========== */
+
+.instructions {
+  font-size: 0.95rem;
+  color: #555;
+  background: #f2f2f2;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #007acc;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark .instructions {
+  background: #2a2a2a;
+  color: #ccc;
+  border-left-color: #66d9ef;
+}
+
+/* ========== Responsive Layout ========== */
+
+@media (max-width: 1000px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .column-wrapper {
+    width: 100%;
+  }
+}
+
+/* ========== Theme Toggle Button ========== */
+
+.theme-toggle {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.theme-toggle button {
+  background-color: #444;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.theme-toggle button:hover {
+  background-color: #222;
+}
